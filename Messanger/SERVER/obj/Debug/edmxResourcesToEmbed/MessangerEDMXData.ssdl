@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище MessangerModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DataDbLoadFile">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DataFile" Type="varbinary" MaxLength="1" Nullable="false" />
+    <Property Name="Login_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LoginData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LogName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Pass" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DataDbLoadFile_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MessageDataLoad">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Login_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_LoginMessageDataLoad">
+    <End Role="LoginData" Type="Self.LoginData" Multiplicity="1" />
+    <End Role="MessageDataLoad" Type="Self.MessageDataLoad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoginData">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MessageDataLoad">
+        <PropertyRef Name="Login_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище MessangerModelContainer">
+    <EntitySet Name="DataDbLoadFile" EntityType="Self.DataDbLoadFile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LoginData" EntityType="Self.LoginData" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MessageDataLoad" EntityType="Self.MessageDataLoad" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_LoginMessageDataLoad" Association="Self.FK_LoginMessageDataLoad">
+      <End Role="LoginData" EntitySet="LoginData" />
+      <End Role="MessageDataLoad" EntitySet="MessageDataLoad" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище MessangerModelContainer" CdmEntityContainer="MessangerEDMX">
+    <EntitySetMapping Name="DataDbLoadFile">
+      <EntityTypeMapping TypeName="IsTypeOf(MessangerModel.DataDbLoadFile)">
+        <MappingFragment StoreEntitySet="DataDbLoadFile">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Login_Id" ColumnName="Login_Id" />
+          <ScalarProperty Name="DataFile" ColumnName="DataFile" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MessageDataLoad">
+      <EntityTypeMapping TypeName="MessangerModel.MessageDataLoad">
+        <MappingFragment StoreEntitySet="MessageDataLoad">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Login_Id" ColumnName="Login_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoginDataSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MessangerModel.LoginData)" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <MappingFragment StoreEntitySet="LoginData">
+          <ScalarProperty Name="DataDbLoadFile_Id" ColumnName="DataDbLoadFile_Id" />
+          <ScalarProperty Name="Pass" ColumnName="Pass" />
+          <ScalarProperty Name="LogName" ColumnName="LogName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

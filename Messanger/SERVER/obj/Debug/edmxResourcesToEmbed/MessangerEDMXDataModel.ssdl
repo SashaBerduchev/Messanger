@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MessangerModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MessangerModelStoreContainer">
+    <EntitySet Name="DataDbLoadFile" EntityType="MessangerModel.Store.DataDbLoadFile" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LoginData" EntityType="MessangerModel.Store.LoginData" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MessageDataLoad" EntityType="MessangerModel.Store.MessageDataLoad" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_LoginMessageDataLoad" Association="MessangerModel.Store.FK_LoginMessageDataLoad">
+      <End Role="LoginData" EntitySet="LoginData" />
+      <End Role="MessageDataLoad" EntitySet="MessageDataLoad" />
+    </AssociationSet>
+    <AssociationSet Name="DataDbLoadFileLoginData" Association="MessangerModel.Store.DataDbLoadFileLoginData">
+      <End Role="DataDbLoadFile" EntitySet="DataDbLoadFile" />
+      <End Role="LoginData" EntitySet="LoginData" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="DataDbLoadFile">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DataFile" Type="varbinary" Nullable="false" MaxLength="1" />
+    <Property Name="Login_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LoginData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LogName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Pass" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DataDbLoadFile_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MessageDataLoad">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Login_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_LoginMessageDataLoad">
+    <End Role="LoginData" Type="MessangerModel.Store.LoginData" Multiplicity="1" />
+    <End Role="MessageDataLoad" Type="MessangerModel.Store.MessageDataLoad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoginData">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MessageDataLoad">
+        <PropertyRef Name="Login_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="DataDbLoadFileLoginData">
+    <End Role="DataDbLoadFile" Type="MessangerModel.Store.DataDbLoadFile" Multiplicity="1" />
+    <End Role="LoginData" Type="MessangerModel.Store.LoginData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DataDbLoadFile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LoginData">
+        <PropertyRef Name="DataDbLoadFile_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

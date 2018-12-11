@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище MeaaangerDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "MeaaangerDB.dbo.DataDbLoadFile" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="DataDbLoadFile">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="DataFile" />
+            <PropertyRef Name="Login_Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DataFile" Type="varbinary(max)" Nullable="false" />
+          <Property Name="Login_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LoginData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LogName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Pass" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MessageDataLoad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Login_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_LoginMessageDataLoad">
+          <End Role="LoginData" Type="Self.LoginData" Multiplicity="1" />
+          <End Role="MessageDataLoad" Type="Self.MessageDataLoad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MessageDataLoad">
+              <PropertyRef Name="Login_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище MeaaangerDBModelContainer">
+          <EntitySet Name="LoginData" EntityType="Self.LoginData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MessageDataLoad" EntityType="Self.MessageDataLoad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataDbLoadFile" EntityType="Self.DataDbLoadFile" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DataDbLoadFile].[Id] AS [Id], 
+    [DataDbLoadFile].[DataFile] AS [DataFile], 
+    [DataDbLoadFile].[Login_Id] AS [Login_Id]
+    FROM [dbo].[DataDbLoadFile] AS [DataDbLoadFile]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_LoginMessageDataLoad" Association="Self.FK_LoginMessageDataLoad">
+            <End Role="LoginData" EntitySet="LoginData" />
+            <End Role="MessageDataLoad" EntitySet="MessageDataLoad" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MeaaangerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LoginData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pass" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MessageDataLoad" Relationship="Self.FK_LoginMessageDataLoad" FromRole="LoginData" ToRole="MessageDataLoad" />
+        </EntityType>
+        <EntityType Name="MessageDataLoad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LoginData" Relationship="Self.FK_LoginMessageDataLoad" FromRole="MessageDataLoad" ToRole="LoginData" />
+        </EntityType>
+        <EntityType Name="DataDbLoadFile">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="DataFile" />
+            <PropertyRef Name="Login_Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataFile" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="Login_Id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_LoginMessageDataLoad">
+          <End Role="LoginData" Type="Self.LoginData" Multiplicity="1" />
+          <End Role="MessageDataLoad" Type="Self.MessageDataLoad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginData">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MessageDataLoad">
+              <PropertyRef Name="Login_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MeaaangerDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LoginData" EntityType="Self.LoginData" />
+          <EntitySet Name="MessageDataLoad" EntityType="Self.MessageDataLoad" />
+          <EntitySet Name="DataDbLoadFile" EntityType="Self.DataDbLoadFile" />
+          <AssociationSet Name="FK_LoginMessageDataLoad" Association="Self.FK_LoginMessageDataLoad">
+            <End Role="LoginData" EntitySet="LoginData" />
+            <End Role="MessageDataLoad" EntitySet="MessageDataLoad" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище MeaaangerDBModelContainer" CdmEntityContainer="MeaaangerDBEntities">
+          <EntitySetMapping Name="LoginData">
+            <EntityTypeMapping TypeName="MeaaangerDBModel.LoginData">
+              <MappingFragment StoreEntitySet="LoginData">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LogName" ColumnName="LogName" />
+                <ScalarProperty Name="Pass" ColumnName="Pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageDataLoad">
+            <EntityTypeMapping TypeName="MeaaangerDBModel.MessageDataLoad">
+              <MappingFragment StoreEntitySet="MessageDataLoad">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Login_Id" ColumnName="Login_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataDbLoadFile">
+            <EntityTypeMapping TypeName="MeaaangerDBModel.DataDbLoadFile">
+              <MappingFragment StoreEntitySet="DataDbLoadFile">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DataFile" ColumnName="DataFile" />
+                <ScalarProperty Name="Login_Id" ColumnName="Login_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

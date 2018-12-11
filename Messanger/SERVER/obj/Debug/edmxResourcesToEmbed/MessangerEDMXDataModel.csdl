@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MessangerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="DataDbLoadFile">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DataFile" Type="Binary" MaxLength="1" FixedLength="false" Nullable="false" />
+    <Property Name="Login_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="LoginData" Relationship="MessangerModel.DataDbLoadFileLoginData" FromRole="DataDbLoadFile" ToRole="LoginData" />
+  </EntityType>
+  <EntityType Name="LoginData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LogName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Pass" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="MessageDataLoad" Relationship="Self.FK_LoginMessageDataLoad" FromRole="LoginData" ToRole="MessageDataLoad" />
+    <NavigationProperty Name="DataDbLoadFile" Relationship="MessangerModel.DataDbLoadFileLoginData" FromRole="LoginData" ToRole="DataDbLoadFile" />
+  </EntityType>
+  <EntityType Name="MessageDataLoad">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Login_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="LoginData" Relationship="Self.FK_LoginMessageDataLoad" FromRole="MessageDataLoad" ToRole="LoginData" />
+  </EntityType>
+  <Association Name="FK_LoginMessageDataLoad">
+    <End Role="LoginData" Type="Self.LoginData" Multiplicity="1" />
+    <End Role="MessageDataLoad" Type="Self.MessageDataLoad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoginData">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MessageDataLoad">
+        <PropertyRef Name="Login_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MessangerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="DataDbLoadFile" EntityType="Self.DataDbLoadFile" />
+    <EntitySet Name="LoginData" EntityType="Self.LoginData" />
+    <EntitySet Name="MessageDataLoad" EntityType="Self.MessageDataLoad" />
+    <AssociationSet Name="FK_LoginMessageDataLoad" Association="Self.FK_LoginMessageDataLoad">
+      <End Role="LoginData" EntitySet="LoginData" />
+      <End Role="MessageDataLoad" EntitySet="MessageDataLoad" />
+    </AssociationSet>
+    <AssociationSet Name="DataDbLoadFileLoginData" Association="MessangerModel.DataDbLoadFileLoginData">
+      <End Role="DataDbLoadFile" EntitySet="DataDbLoadFile" />
+      <End Role="LoginData" EntitySet="LoginData" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="DataDbLoadFileLoginData">
+    <End Type="MessangerModel.DataDbLoadFile" Role="DataDbLoadFile" Multiplicity="1" />
+    <End Type="MessangerModel.LoginData" Role="LoginData" Multiplicity="*" />
+  </Association>
+</Schema>

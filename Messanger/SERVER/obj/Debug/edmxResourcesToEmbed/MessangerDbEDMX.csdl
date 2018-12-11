@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MessangerDbEDMX" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="MessangerDbEDMXContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="LoginSet" EntityType="MessangerDbEDMX.Login" />
+    <EntitySet Name="MessageDataSet" EntityType="MessangerDbEDMX.MessageData" />
+    <EntitySet Name="DataDbSet" EntityType="MessangerDbEDMX.DataDb" />
+    <AssociationSet Name="LoginMessageData" Association="MessangerDbEDMX.LoginMessageData">
+      <End Role="Login" EntitySet="LoginSet" />
+      <End Role="MessageData" EntitySet="MessageDataSet" />
+    </AssociationSet>
+    <AssociationSet Name="LoginDataDb" Association="MessangerDbEDMX.LoginDataDb">
+      <End Role="Login" EntitySet="LoginSet" />
+      <End Role="DataDb" EntitySet="DataDbSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Login">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LogName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Pass" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="MessageData" Relationship="MessangerDbEDMX.LoginMessageData" FromRole="Login" ToRole="MessageData" />
+    <NavigationProperty Name="DataDb" Relationship="MessangerDbEDMX.LoginDataDb" FromRole="Login" ToRole="DataDb" />
+  </EntityType>
+  <EntityType Name="MessageData">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Login" Relationship="MessangerDbEDMX.LoginMessageData" FromRole="MessageData" ToRole="Login" />
+  </EntityType>
+  <EntityType Name="DataDb">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DataFile" Type="Byte" Nullable="false" />
+    <NavigationProperty Name="Login" Relationship="MessangerDbEDMX.LoginDataDb" FromRole="DataDb" ToRole="Login" />
+  </EntityType>
+  <Association Name="LoginMessageData">
+    <End Type="MessangerDbEDMX.Login" Role="Login" Multiplicity="1" />
+    <End Type="MessangerDbEDMX.MessageData" Role="MessageData" Multiplicity="*" />
+  </Association>
+  <Association Name="LoginDataDb">
+    <End Type="MessangerDbEDMX.Login" Role="Login" Multiplicity="1" />
+    <End Type="MessangerDbEDMX.DataDb" Role="DataDb" Multiplicity="*" />
+  </Association>
+</Schema>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище MessangerDatabaseModelContainer" CdmEntityContainer="MessangerDatabaseEntities">
+    <EntitySetMapping Name="DataDbLoadFile">
+      <EntityTypeMapping TypeName="MessangerDatabaseModel.DataDbLoadFile">
+        <MappingFragment StoreEntitySet="DataDbLoadFile">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DataFile" ColumnName="DataFile" />
+          <ScalarProperty Name="Login_Id" ColumnName="Login_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LoginData">
+      <EntityTypeMapping TypeName="MessangerDatabaseModel.LoginData">
+        <MappingFragment StoreEntitySet="LoginData">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="LogName" ColumnName="LogName" />
+          <ScalarProperty Name="Pass" ColumnName="Pass" />
+          <ScalarProperty Name="DataDbLoadFile_Id" ColumnName="DataDbLoadFile_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MessageDataLoad">
+      <EntityTypeMapping TypeName="MessangerDatabaseModel.MessageDataLoad">
+        <MappingFragment StoreEntitySet="MessageDataLoad">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="Login_Id" ColumnName="Login_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

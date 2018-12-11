@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MessangerDbEDMX.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MessangerDbEDMXStoreContainer">
+    <EntitySet Name="LoginSet" EntityType="MessangerDbEDMX.Store.LoginSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MessageDataSet" EntityType="MessangerDbEDMX.Store.MessageDataSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="DataDbSet" EntityType="MessangerDbEDMX.Store.DataDbSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="LoginMessageData" Association="MessangerDbEDMX.Store.LoginMessageData">
+      <End Role="Login" EntitySet="LoginSet" />
+      <End Role="MessageData" EntitySet="MessageDataSet" />
+    </AssociationSet>
+    <AssociationSet Name="LoginDataDb" Association="MessangerDbEDMX.Store.LoginDataDb">
+      <End Role="Login" EntitySet="LoginSet" />
+      <End Role="DataDb" EntitySet="DataDbSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="LoginSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LogName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Pass" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MessageDataSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Login_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DataDbSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DataFile" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Login_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="LoginMessageData">
+    <End Role="Login" Type="MessangerDbEDMX.Store.LoginSet" Multiplicity="1" />
+    <End Role="MessageData" Type="MessangerDbEDMX.Store.MessageDataSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Login">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MessageData">
+        <PropertyRef Name="Login_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LoginDataDb">
+    <End Role="Login" Type="MessangerDbEDMX.Store.LoginSet" Multiplicity="1" />
+    <End Role="DataDb" Type="MessangerDbEDMX.Store.DataDbSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Login">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DataDb">
+        <PropertyRef Name="Login_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

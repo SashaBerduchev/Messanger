@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="Хранилище MessangerDatabaseModelContainer" CdmEntityContainer="MessangerDatabaseEntities">
+  <EntityContainerMapping StorageEntityContainer="MessangerDatabaseModelStoreContainer" CdmEntityContainer="MessangerDatabaseEntities">
     <EntitySetMapping Name="DataDbLoadFile">
-      <EntityTypeMapping TypeName="MessangerDatabaseModel.DataDbLoadFile">
+      <EntityTypeMapping TypeName="IsTypeOf(MessangerDatabaseModel.DataDbLoadFile)">
         <MappingFragment StoreEntitySet="DataDbLoadFile">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="DataFile" ColumnName="DataFile" />
@@ -11,7 +11,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="LoginData">
-      <EntityTypeMapping TypeName="MessangerDatabaseModel.LoginData">
+      <EntityTypeMapping TypeName="IsTypeOf(MessangerDatabaseModel.LoginData)">
         <MappingFragment StoreEntitySet="LoginData">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="LogName" ColumnName="LogName" />
@@ -21,7 +21,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="MessageDataLoad">
-      <EntityTypeMapping TypeName="MessangerDatabaseModel.MessageDataLoad">
+      <EntityTypeMapping TypeName="IsTypeOf(MessangerDatabaseModel.MessageDataLoad)">
         <MappingFragment StoreEntitySet="MessageDataLoad">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Message" ColumnName="Message" />

@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/15/2018 12:37:58
--- Generated from EDMX file: D:\GitHub\Messanger\SERVER\MessangerEDMXModel.edmx
+-- Date Created: 01/01/2019 16:18:03
+-- Generated from EDMX file: D:\Progects\C-SHARP\Messanger\Messanger\Messanger\SERVER\MessangerEDMXModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [D:\GITHUB\MESSANGER\SERVER\MESSANGERDATABASE.MDF];
+USE [MessangerDatabase];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
